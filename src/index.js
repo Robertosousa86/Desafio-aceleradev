@@ -36,9 +36,12 @@ async function apiGet() {
 
         const sha1 = hash.hashCode(decifrado);
 
-        apiResponse.data.resumo_criptografico = sha1;
+        resultados.resumo_criptografico = sha1;
 
-        console.log(resultados);
+        fs.writeFileSync(path.resolve('answer.json'), JSON.stringify(resultados), function (err) {
+            if (err) return console.log(err);
+            return console.log('Arquivo atualizado!');
+        });
 
     } catch (error) {
         console.log(error.response);
