@@ -2,6 +2,8 @@ const axios = require('axios');
 require('dotenv').config();
 const fs = require('fs');
 
+const decode = require('./utils/CifraCesar');
+
 async function apiGet() {
     try {
         const apiResponse = await axios.get(`${process.env.APICODENATION}`);
@@ -14,12 +16,18 @@ async function apiGet() {
         } = apiResponse.data;
 
         const api = JSON.stringify(resultados);
-        
-        fs.writeFile('./answer.json', api, function (err) {
+
+        fs.writeFileSync('./answer.json', api, function (err) {
             if (err) return console.log(err);
             console.log('Arquivo Salvo!');
         });
+        
         console.log(resultados);
+
+        decode.decifrar(cifrado, numero_casas);
+        apiResponse.data.decifrado = decifrado;
+
+        console.log(resultados)
 
     } catch (error) {
         console.log(error.response);
