@@ -3,6 +3,7 @@ require('dotenv').config();
 const fs = require('fs');
 
 const decode = require('./utils/CifraCesar');
+const hash = require('./utils/SecureHash');
 
 async function apiGet() {
     try {
@@ -21,13 +22,19 @@ async function apiGet() {
             if (err) return console.log(err);
             console.log('Arquivo Salvo!');
         });
-        
+
         console.log(resultados);
 
         decode.decifrar(cifrado, numero_casas);
         apiResponse.data.decifrado = decifrado;
 
         console.log(resultados)
+
+        const sha1 = hash.hashCode(decifrado);
+
+        apiResponse.data.resumo_criptografico = sha1;
+
+        console.log(resultados);
 
     } catch (error) {
         console.log(error.response);
