@@ -5,6 +5,7 @@ const path = require('path');
 
 const decode = require('./utils/CifraCesar');
 const hash = require('./utils/SecureHash');
+const post = require('./utils/Enviar');
 
 async function apiGet() {
     try {
@@ -42,10 +43,13 @@ async function apiGet() {
             if (err) return console.log(err);
             return console.log('Arquivo atualizado!');
         });
+        
+        console.log(resultados)
+
+        post.enviar()
 
     } catch (error) {
         console.log(error.response);
     }
-
 }
-apiGet()
+apiGet();
